@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
@@ -9,7 +10,7 @@ type BtnProps = {
 const Botao = ({name, href}: BtnProps) => {
     return(
         <View>
-            <TouchableOpacity style={styles.btnPrimary}>
+            <TouchableOpacity style={styles.btnPrimary} onPress={() => router.push(href)}>
                 <Text style={styles.btnPrimaryText}>{name}</Text>
             </TouchableOpacity>
         </View>
