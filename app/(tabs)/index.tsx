@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
-import DescritivoInicial from '../components/DescritivoInicial';
+import DescritivoInicial from '../../components/DescritivoInicial';
 
 export const options = {
   tabBarStyle: { display: 'none' }, 

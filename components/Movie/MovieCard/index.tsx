@@ -40,7 +40,7 @@ export default function MovieCard({ movie, fluxo }: { movie: any; fluxo: string 
           </Text>
         </View>
         <TouchableOpacity>
-          <Text style={{ color: '#fff', fontWeight: 'bold', margin: 6}}>Ver mais →</Text>
+          <Text style={{ color: '#fff', fontWeight: 'bold', margin: 6}} onPress={() => handlePress()}>Ver mais →</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -1,8 +1,8 @@
 // app/filmes.tsx
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
-import MovieGrid from '../components/Movie/MovieGrid';
+import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import MovieGrid from '../../components/Movie/MovieGrid';
 
 
 const headers = {
@@ -63,8 +63,11 @@ export default function Series() {
   if (error) return <Text>Erro ao carregar séries.</Text>;
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#121212', paddingTop: 50 }}>
+    <View style={{ flex: 1, backgroundColor: '#121212', paddingTop: 50, alignItems: 'center'}}>
       <Text style={styles.title}>Reviews de séries</Text>
+      <TouchableOpacity style={styles.btnPrimary}>
+        <Text style={styles.text}>Adicionar review</Text>
+      </TouchableOpacity>
       <MovieGrid movies={data} fluxo="series" />
     </View>
   );
@@ -77,5 +80,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 700,
     marginTop: 20
+  },
+  text: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 700
+  },
+  btnPrimary: {
+    backgroundColor: '#D50000',
+    borderRadius: 12,
+    padding: 14,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    marginTop: 0
   }
 });

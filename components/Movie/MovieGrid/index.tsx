@@ -24,7 +24,6 @@ export default function MovieGrid({ movies, fluxo }: { movies: any[], fluxo: str
         />
       </View>
 
-      {/* Lista horizontal de filmes */}
       <FlatList
         data={filteredMovies}
         horizontal
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    marginTop: 80,
+    marginTop: 20,
   },
   icon: {
     marginRight: 8,

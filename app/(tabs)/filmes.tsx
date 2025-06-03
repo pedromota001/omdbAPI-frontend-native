@@ -2,7 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
-import MovieGrid from '../components/Movie/MovieGrid';
+import MovieGrid from '../../components/Movie/MovieGrid';
 
 
 const headers = {
