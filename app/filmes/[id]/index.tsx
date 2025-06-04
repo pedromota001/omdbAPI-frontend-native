@@ -24,7 +24,7 @@ async function fetchFilme(id: string){
 export default function FilmeScreen(){
     const {id} = useLocalSearchParams();
     
-    const queryClient = useQueryClient;
+    const queryClient = useQueryClient();
 
     const{data, isLoading, error} = useQuery({
         queryKey: ['filme', id],
