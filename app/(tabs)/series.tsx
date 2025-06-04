@@ -17,8 +17,6 @@ async function fetchSeries() {
   return res.data.results;
 }
 
-// Mantenha fetchOMDB aqui se for usado em outros lugares, ou mova para um util
-// ou diretamente para AddReviewForm se só ele usar.
 async function fetchOMDB(titulo: string) {
   const query = titulo.replaceAll(' ', '+');
   const res = await axios.get(`https://www.omdbapi.com/?t=${query}&apikey=6585022c`);
@@ -40,23 +38,21 @@ export default function Series() {
   return (
     <View style={{ flex: 1, backgroundColor: '#121212', paddingTop: 50, alignItems: 'center'}}>
       <Text style={styles.title}>Reviews de séries</Text>
-      {/* Botão que abre o modal */}
+
       <TouchableOpacity style={styles.btnPrimary} onPress={() => setModalVisible(true)}>
         <Text style={styles.text}>Adicionar review</Text>
       </TouchableOpacity>
       <MovieGrid movies={data} fluxo="series" />
 
-      {/* O Modal para o formulário de adicionar review */}
       <Modal
-        animationType="slide" // ou "fade", "none"
-        transparent={true} // Isso faz com que o fundo seja transparente
+        animationType="slide" 
+        transparent={true} 
         visible={modalVisible}
-        onRequestClose={() => { // Lida com o botão "voltar" do Android
-          setModalVisible(false); // Fecha o modal
+        onRequestClose={() => { 
+          setModalVisible(false); 
         }}
       >
         <View style={styles.centeredView}>
-          {/* Renderiza o formulário de review dentro do modal */}
           <AddReviewForm onClose={() => setModalVisible(false)} />
         </View>
       </Modal>

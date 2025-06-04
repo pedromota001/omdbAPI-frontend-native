@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // Copie as headers e a função fetchOMDB do seu arquivo filmes.tsx
 const headers = {
@@ -47,7 +47,8 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onClose }) => {
       }, { headers });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['filmes'] }); // Invalida a query de filmes para atualizar a lista
+      queryClient.invalidateQueries({ queryKey: ['filmes'] }); 
+      queryClient.invalidateQueries({ queryKey: ['series'] }); // Invalida a query de filmes para atualizar a lista
       Alert.alert('Sucesso', 'Filme adicionado com sucesso!');
       onClose(); // Fecha o modal ao adicionar com sucesso
     },
@@ -74,6 +75,11 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onClose }) => {
   }
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.keyboardAvoidingContainer}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
     <View style={styles.modalContent}>
       <TouchableOpacity onPress={onClose} style={styles.closeButton}>
         <Text style={styles.closeButtonText}>X</Text>
@@ -107,16 +113,29 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onClose }) => {
         <Text style={styles.submitButtonText}>Enviar Review</Text>
       </TouchableOpacity>
     </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  keyboardAvoidingContainer: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   modalContent: {
     backgroundColor: '#1e1e1e', // Cor de fundo do modal
     padding: 20,
     borderRadius: 15,
     width: '90%',
-    maxHeight: '80%', // Limita a altura do modal
+    maxHeight: '90%', // Limita a altura do modal
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
