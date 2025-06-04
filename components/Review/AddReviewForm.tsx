@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-// Copie as headers e a função fetchOMDB do seu arquivo filmes.tsx
+// Copie as headers e a função fetchOMDB do seu arquivo series.tsx
 const headers = {
   'X-Parse-Application-Id': 'GwnUACA5KJuULzj5Pf30JZhwXU0lkeu43Z1wnDoN',
   'X-Parse-REST-API-Key': '8wYzUlStyJkZFCgAh1aHHy035JPU1e8wNhgRtBqp',
@@ -28,32 +28,31 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onClose }) => {
 
   const mutation = useMutation({
     mutationFn: async ({ titulo, email, review }: { titulo: string, email: string, review: string }) => {
-      const filme = await fetchOMDB(titulo);
-      if (filme?.Type !== 'movie') throw new Error('Filme não encontrado ou não é um filme');
+      const serie = await fetchOMDB(titulo);
+      if (serie?.Type !== 'series') throw new Error('serie não encontrado ou não é um serie');
 
-      await axios.post('https://parseapi.back4app.com/classes/Filme', {
-        titulo: filme.Title,
-        genero: filme.Genre,
-        duracao: filme.Runtime,
-        descricao: filme.Plot,
-        diretor: filme.Director,
-        pais: filme.Country,
-        premios: filme.Awards,
-        notaIMDB: parseFloat(filme.imdbRating), // Use parseFloat para notas decimais
+      await axios.post('https://parseapi.back4app.com/classes/Series', {
+        titulo: serie.Title,
+        genero: serie.Genre,
+        duracao: serie.Runtime,
+        descricao: serie.Plot,
+        diretor: serie.Director,
+        pais: serie.Country,
+        premios: serie.Awards,
+        notaIMDB: parseFloat(serie.imdbRating), // Use parseFloat para notas decimais
         comentario: review,
         user_email: email,
-        posterUrl: filme.Poster,
-        ano: parseInt(filme.Year)
+        posterUrl: serie.Poster,
+        ano: parseInt(serie.Year)
       }, { headers });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['filmes'] }); 
-      queryClient.invalidateQueries({ queryKey: ['series'] }); // Invalida a query de filmes para atualizar a lista
-      Alert.alert('Sucesso', 'Filme adicionado com sucesso!');
+    onSuccess: () => { 
+      queryClient.invalidateQueries({ queryKey: ['series'] }); // Invalida a query de series para atualizar a lista
+      Alert.alert('Sucesso', 'serie adicionado com sucesso!');
       onClose(); // Fecha o modal ao adicionar com sucesso
     },
     onError: (error: any) => { // Tipagem do erro para acessar a propriedade 'message'
-      Alert.alert('Erro', `Erro ao adicionar filme: ${error.message || 'Verifique o título do filme.'}`);
+      Alert.alert('Erro', `Erro ao adicionar serie: ${error.message || 'Verifique o título do serie.'}`);
     }
   });
 
@@ -87,7 +86,7 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onClose }) => {
       <Text style={styles.title}>Adicionar Novo Review</Text>
       <TextInput
         style={styles.input}
-        placeholder="Título do Filme"
+        placeholder="Título do serie"
         placeholderTextColor="#aaa"
         value={titulo}
         onChangeText={setTitulo}
