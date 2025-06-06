@@ -30,6 +30,7 @@ export default function RootLayout() {
               if (route.name === 'filmes') iconName = 'film-outline';
               else if (route.name === 'series') iconName = 'tv-outline';
               else if (route.name === 'ranks') iconName = 'medal';
+              else if (route.name === 'saveRank') iconName = 'explore';
               else iconName = 'home-outline';
 
               return <Ionicons name={iconName} size={size} color={color} />;
@@ -40,6 +41,7 @@ export default function RootLayout() {
           <Tabs.Screen name="series" options={{ title: 'Séries' }} />
           <Tabs.Screen name="filmes" options={{ title: 'Filmes' }} />
           <Tabs.Screen name="ranks" options={{title: 'Ranking'}} />
+          <Tabs.Screen name='saveRank' options={{title: 'Explorar Ranks'}} />
         </Tabs>
 
         <StatusBar style="auto" />

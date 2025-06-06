@@ -1,17 +1,17 @@
 // app/ranking.tsx
 import { useState } from "react";
-import React = require("react");
 import {
-  View,
+  Alert,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Alert,
   TouchableOpacity,
-  Modal,
+  View,
 } from "react-native";
+import React = require("react");
 
 export default function Ranking() {
   const [posters, setPosters] = useState({ first: '', second: '', third: '' });
@@ -79,7 +79,7 @@ export default function Ranking() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>🎬 Rank Your Top 3 Movies or Series</Text>
+      <Text style={styles.title}>Crie seu Ranking</Text>
 
       <View style={styles.podiumRow}>
         {renderPodium("2nd", "second", "#e5e7eb")}
@@ -88,13 +88,13 @@ export default function Ranking() {
       </View>
 
       <TouchableOpacity style={styles.saveButton} onPress={() => setModalVisible(true)}>
-        <Text style={styles.saveText}>Save Ranking</Text>
+        <Text style={styles.saveText}>Salvar</Text>
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>What's your name?</Text>
+            <Text style={styles.modalTitle}>Qual o seu nome?</Text>
             <TextInput
               style={styles.modalInput}
               placeholder="Optional"
@@ -104,10 +104,10 @@ export default function Ranking() {
             />
             <View style={styles.modalButtons}>
               <TouchableOpacity onPress={() => handleSave(username || "Anonymous")}>
-                <Text style={styles.saveText}>Save</Text>
+                <Text style={styles.saveText}>Salvar</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Text style={styles.cancelText}>Cancel</Text>
+                <Text style={styles.cancelText}>Cancelar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -120,13 +120,16 @@ export default function Ranking() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#151718",
     alignItems: "center",
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 45,
+    textAlign: 'center',
+    fontWeight: '700',
+    marginTop: 20,
     marginBottom: 20,
+    color: "#FFD700"
   },
   podiumRow: {
     flexDirection: "row",
