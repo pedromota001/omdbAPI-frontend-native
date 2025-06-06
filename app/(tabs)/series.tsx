@@ -1,4 +1,3 @@
-// app/series.tsx
 import { AddReviewForm } from '@/components/Review/AddReviewForm'; // Sua importação com alias
 import { useQuery, useQueryClient } from '@tanstack/react-query'; // Removido useMutation daqui, pois agora está no AddReviewForm
 import axios from 'axios';
@@ -65,13 +64,13 @@ const styles = StyleSheet.create({
     color: '#FFD700',
     fontSize: 45,
     textAlign: 'center',
-    fontWeight: '700', // Use string para fontWeight
+    fontWeight: '700',
     marginTop: 20
   },
   text: {
     color: '#fff',
     fontSize: 24,
-    fontWeight: '700' // Use string para fontWeight
+    fontWeight: '700'
   },
   btnPrimary: {
     backgroundColor: '#D50000',
@@ -90,6 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)', // Fundo escuro semi-transparente
+    backgroundColor: 'rgba(0,0,0,0.7)',
   },
 });

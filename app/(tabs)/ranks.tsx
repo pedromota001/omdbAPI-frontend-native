@@ -1,4 +1,3 @@
-// app/ranking.tsx
 import { useState } from "react";
 import {
   Alert,

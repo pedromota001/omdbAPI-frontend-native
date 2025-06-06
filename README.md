@@ -2,9 +2,19 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## CineApp
 
+## Equipe
+
+Gustavo Porto - 848942
+Luis Gustavo - 848988
+Miguel Procópio - 849029
+Pedro Mota - 849615
+Rondon Guilherme - 850074
+Thiago Araujo - 848621
 1. Install dependencies
+
+## Get Started
 
    ```bash
    npm install

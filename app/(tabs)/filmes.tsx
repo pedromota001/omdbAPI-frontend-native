@@ -1,9 +1,8 @@
-// app/filmes.tsx
 import { AddReviewForm } from '@/components/Review/AddReviewForm';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
-import { ActivityIndicator, Alert, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MovieGrid from '../../components/Movie/MovieGrid';
 
 const headers = {
