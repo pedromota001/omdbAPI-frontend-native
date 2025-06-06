@@ -1,9 +1,10 @@
 // app/filmes.tsx
+import { AddReviewForm } from '@/components/Review/AddReviewForm';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { ActivityIndicator, Alert, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MovieGrid from '../../components/Movie/MovieGrid';
-
 
 const headers = {
   'X-Parse-Application-Id': 'GwnUACA5KJuULzj5Pf30JZhwXU0lkeu43Z1wnDoN',
@@ -16,59 +17,38 @@ async function fetchFilmes() {
   return res.data.results;
 }
 
-async function fetchOMDB(titulo: string) {
-  const query = titulo.replaceAll(' ', '+');
-  const res = await axios.get(`https://www.omdbapi.com/?t=${query}&apikey=6585022c`);
-  return res.data;
-}
-
 export default function Filmes() {
   const queryClient = useQueryClient();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['filmes'],
     queryFn: fetchFilmes,
   });
 
-  const mutation = useMutation({
-    mutationFn: async ({ titulo, email, review }: { titulo: string, email: string, review: string }) => {
-      const filme = await fetchOMDB(titulo);
-      if (filme?.Type !== 'movie') throw new Error('Filme não encontrado');
-
-      await axios.post('https://parseapi.back4app.com/classes/Filme', {
-        titulo: filme.Title,
-        genero: filme.Genre,
-        duracao: filme.Runtime,
-        descricao: filme.Plot,
-        diretor: filme.Director,
-        pais: filme.Country,
-        premios: filme.Awards,
-        notaIMDB: parseInt(filme.imdbRating),
-        comentario: review,
-        user_email: email,
-        posterUrl: filme.Poster,
-        ano: parseInt(filme.Year)
-      }, { headers });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['filmes'] });
-      Alert.alert('Sucesso', 'Filme adicionado com sucesso!');
-    },
-    onError: () => {
-      Alert.alert('Erro', 'Erro ao adicionar filme.');
-    }
-  });
-
   if (isLoading) return <ActivityIndicator size="large" color="#e50914" />;
   if (error) return <Text>Erro ao carregar filmes.</Text>;
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#121212', paddingTop: 50, alignItems: 'center'}}>
+    <View style={{ flex: 1, backgroundColor: '#121212', paddingTop: 50, alignItems: 'center' }}>
       <Text style={styles.title}>Reviews de Filmes</Text>
-      <TouchableOpacity style={styles.btnPrimary}>
+
+      <TouchableOpacity style={styles.btnPrimary} onPress={() => setModalVisible(true)}>
         <Text style={styles.text}>Adicionar review</Text>
       </TouchableOpacity>
+
       <MovieGrid movies={data} fluxo="filmes" />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <AddReviewForm onClose={() => setModalVisible(false)} fluxo="filmes" />
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -78,13 +58,13 @@ const styles = StyleSheet.create({
     color: '#FFD700',
     fontSize: 45,
     textAlign: 'center',
-    fontWeight: 700,
+    fontWeight: '700',
     marginTop: 20
   },
   text: {
     color: '#fff',
     fontSize: 24,
-    fontWeight: 700
+    fontWeight: '700'
   },
   btnPrimary: {
     backgroundColor: '#D50000',
@@ -97,6 +77,11 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     marginTop: 0
-  }
-  }
-);
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+  },
+});

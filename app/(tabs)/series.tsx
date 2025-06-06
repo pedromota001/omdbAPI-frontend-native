@@ -53,7 +53,7 @@ export default function Series() {
         }}
       >
         <View style={styles.centeredView}>
-          <AddReviewForm onClose={() => setModalVisible(false)} />
+          <AddReviewForm onClose={() => setModalVisible(false)} fluxo="series" />
         </View>
       </Modal>
     </View>
