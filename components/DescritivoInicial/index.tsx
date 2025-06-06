@@ -9,6 +9,7 @@ const DescritivoInicial = () => {
             <Botao name='Filmes' href='filmes'/>
             <Botao name='Ranks' href='/ranks'/>
             <Botao name='Cadastro de ranks' href='/saveRank'/>
+            <Botao name='Minha lista' href='/myList'/>
         </View>
 
     )

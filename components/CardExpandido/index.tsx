@@ -1,6 +1,6 @@
+import { useMyListStore } from '@/store/useUserStore';
 import { FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DescritivoCardExpandido from '../DescritivoCardExpandido';
 
@@ -8,6 +8,18 @@ const CardExpandido = ({ object, onClick }: { object: any; onClick: (id: string)
   const onHandleClick = () => {
     onClick(object.objectId);
   };
+
+  const { addMyList, removeMyList, isMyList } = useMyListStore();
+  const ItemMyList = isMyList(object.objectId);
+
+  const onClickMyListButton = () => {
+    ItemMyList ? removeMyList(object.objectId) : addMyList({
+      objectId: object.objectId,
+      titulo: object.titulo,
+      posterUrl: object.posterUrl,
+      notaIMDB: object.notaIMDB
+    })
+  }
 
   if (!object) {
     return <Text style={styles.loading}>Carregando dados...</Text>;
@@ -28,6 +40,13 @@ const CardExpandido = ({ object, onClick }: { object: any; onClick: (id: string)
           <FontAwesome name="heart-o" size={20} color="red" style={{marginLeft: 10}} />
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity style={styles.favButton} onPress={onClickMyListButton}>
+        <FontAwesome name={ItemMyList ? 'bookmark' : 'plus-square'} size={24} color="#E50914" />
+        <Text style={styles.favText}>
+          {ItemMyList ? 'Remover da minha lista' : 'Adicionar à minha lista'}
+        </Text>
+      </TouchableOpacity>
 
       <View style={styles.description}>
         <DescritivoCardExpandido object={object} />
@@ -51,8 +70,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 350,
-    height: 300,
+    width: 300,
+    height: 400,
     borderRadius: 16,
     marginRight: 10,
   },
@@ -77,14 +96,30 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 3,
-    marginLeft: 10
+    marginLeft: 10,
   },
   backText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },
-});
+  favButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: '#f4f4f4',
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginTop: 12,
+  },
+  favText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
+  },
+})
 
 
 export default CardExpandido
